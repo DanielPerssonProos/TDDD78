@@ -12,8 +12,9 @@ public class TestShape {
         shapes.add(new Circle(5, 5, 5, Color.GREEN));
         shapes.add(new Circle(7, 7, 7, new Color(231, 255, 34)));
         shapes.add(new Rectangle(10,10,20,30,Color.BLUE));
+        shapes.add(new Text(3,3,12, Color.BLACK, "Hej jag heter Daniel"));
         for (Shape shape : shapes) {
-            shape.draw();
+            //shape.draw();
         }
     }
 }

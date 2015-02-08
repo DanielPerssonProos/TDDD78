@@ -5,39 +5,21 @@ import java.awt.*;
 /**
  * Created by Daniel on 15-02-06.
  */
-public class Rectangle implements Shape {
-    private int x;
-    private int y;
+public class Rectangle extends AbstractShape {
     private int width;
     private int height;
-    private Color color;
 
     public Rectangle(int x, int y, int width, int height, Color color) {
-        this.x = x;
-        this.y = y;
+        super(y, x, color);
         this.width = width;
         this.height = height;
-        this.color = color;
     }
 
     @Override
-    public int getX() {
-        return x;
-    }
-
-    @Override
-    public int getY() {
-        return y;
-    }
-
-    @Override
-    public Color getColor() {
-        return color;
-    }
-
-    @Override
-    public void draw() {
-        System.out.println("Ritar: " + this);
+    public void draw(Graphics g) {
+        //System.out.println("Ritar: " + this);
+        g.setColor(color);
+        g.drawRect(x, y, width, height);
     }
 
     @Override
