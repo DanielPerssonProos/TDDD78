@@ -18,7 +18,6 @@ public class DiagramViewer
         comp.addShape(new Rectangle(100, 100, 20, 30, Color.BLUE));
         comp.addShape(new Text(3,3,12, Color.BLACK, "Hej jag heter Daniel"));
 
-        comp.getShapes();
         JFrame frame = new JFrame("Mitt fönster");
         frame.setLayout(new BorderLayout());
         frame.add(comp, BorderLayout.CENTER);

@@ -18,12 +18,6 @@ public class DiagramComponent extends JComponent {
         shapes.add(s);
     }
 
-    public void getShapes() {
-        for (Shape shape : shapes) {
-            System.out.println(shape);
-        }
-    }
-
     @Override protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
