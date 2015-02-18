@@ -1,23 +1,27 @@
 package se.liu.ida.danpr535.tddd78.lab4;
 
-import java.util.Random;
-
 /**
  * Created by Daniel on 15-02-11.
  */
-public class TetrominoMaker {
+public final class TetrominoMaker {
 
-    public TetrominoMaker() {
-    }
-
-    public int getNumberOfTypes() {
+    public static int getNumberOfTypes() {
         return 7;
     }
 
-    public Poly getPoly(int n) {
-        SquareType[] squareTypes = SquareType.values();
-        //Random random = new Random();
-        SquareType polyType = squareTypes[n];
+    /**
+     * Even if the list squareTypes consists of 9 different SquareTypes,
+     getNumberOfTypes() is only set to 7. Since I put the EMPTY and OUTSIDE
+     SquareTypes at the very last when I declared them, they will not be
+     able to be chosen. This because only a number between 0-6 will be
+     generated and used as index.
+     * @param n
+     * @return
+     */
+    public static Poly getPoly(int n) {
+        /*
+         */
+        SquareType polyType = SquareType.values()[n];
         switch (polyType){
             case I:
                 return getI();
@@ -38,7 +42,7 @@ public class TetrominoMaker {
         }
     }
 
-    private Poly getI(){
+    private static Poly getI(){
         SquareType[][] blueprint = new SquareType[4][4];
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
@@ -47,11 +51,11 @@ public class TetrominoMaker {
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
         }
-        Poly iPoly = new Poly(blueprint);
+        Poly iPoly = new Poly(blueprint,SquareType.I);
         return iPoly;
     }
 
-    private Poly getJ(){
+    private static Poly getJ(){
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
@@ -60,24 +64,23 @@ public class TetrominoMaker {
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
         }
-        Poly jPoly = new Poly(blueprint);
+        Poly jPoly = new Poly(blueprint,SquareType.J);
         return jPoly;
     }
-
-    private Poly getL(){
+    private static Poly getL(){
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 if (row == 1 || (row == 0 && col == 2)){
-                    blueprint[row][col] = SquareType.J;
+                    blueprint[row][col] = SquareType.L;
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
         }
-        Poly jPoly = new Poly(blueprint);
-        return jPoly;
+        Poly lPoly = new Poly(blueprint,SquareType.L);
+        return lPoly;
     }
 
-    private Poly getO(){
+    private static Poly getO(){
         SquareType[][] blueprint = new SquareType[2][2];
 
         for (int row = 0; row < 2; row++) {
@@ -85,11 +88,11 @@ public class TetrominoMaker {
                 blueprint[row][col] = SquareType.O;
             }
         }
-        Poly oPoly = new Poly(blueprint);
+        Poly oPoly = new Poly(blueprint,SquareType.O);
         return oPoly;
     }
 
-    private Poly getS(){
+    private static Poly getS(){
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
@@ -98,11 +101,11 @@ public class TetrominoMaker {
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
         }
-        Poly sPoly = new Poly(blueprint);
+        Poly sPoly = new Poly(blueprint,SquareType.S);
         return sPoly;
     }
 
-    private Poly getT(){
+    private static Poly getT(){
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
@@ -111,11 +114,11 @@ public class TetrominoMaker {
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
         }
-        Poly tPoly = new Poly(blueprint);
+        Poly tPoly = new Poly(blueprint,SquareType.T);
         return tPoly;
     }
 
-    private Poly getZ(){
+    private static Poly getZ(){
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
@@ -124,7 +127,7 @@ public class TetrominoMaker {
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
         }
-        Poly zPoly = new Poly(blueprint);
+        Poly zPoly = new Poly(blueprint,SquareType.Z);
         return zPoly;
     }
 
