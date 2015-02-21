@@ -10,14 +10,18 @@ import java.awt.event.*;
  */
 public class BoardTest {
     public static void main(String[] args) {
-	TetrisFrame tetroBlox = new TetrisFrame(new Board(12,16));
+	TetrisFrame tetroBlox = new TetrisFrame(new Board(16,12));
 
 	final Action doOneStep = new AbstractAction() {
 	    public void actionPerformed(ActionEvent e) {
-		    tetroBlox.getGameBoard().tick();
-	    }
+            tetroBlox.getGameBoard().tick();
+            if (tetroBlox.getGameBoard().checkGameOver()){
+                tetroBlox.showGameOverMessage();
+            }
+
+        }
 	};
-	final Timer clockTimer = new Timer(1000, doOneStep);
+	Timer clockTimer = new Timer(750, doOneStep);
  	clockTimer.setCoalesce(true);
 	clockTimer.start();
 

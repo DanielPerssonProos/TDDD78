@@ -2,6 +2,7 @@ package se.liu.ida.danpr535.tddd78.lab4;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.EnumMap;
 
 public class TetrisComponent extends JComponent implements BoardListener{
@@ -26,6 +27,36 @@ public class TetrisComponent extends JComponent implements BoardListener{
         colorMap.put(SquareType.Z, Color.CYAN);
         colorMap.put(SquareType.EMPTY, Color.GRAY);
         colorMap.put(SquareType.OUTSIDE, Color.BLACK);
+
+        getInputMap().put(KeyStroke.getKeyStroke("A"), "moveLeft");
+        getInputMap().put(KeyStroke.getKeyStroke("D"), "moveRight");
+        getInputMap().put(KeyStroke.getKeyStroke("W"), "rotate");
+        getInputMap().put(KeyStroke.getKeyStroke("S"), "place");
+        getActionMap().put("moveRight", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                board.movePolyRight();
+            }
+        });
+        getActionMap().put("moveLeft", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                board.movePolyLeft();
+            }
+        });
+        getActionMap().put("rotate", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                board.rotateFalling();
+            }
+        });
+        getActionMap().put("place", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                board.placeFalling();
+            }
+        });
+
     }
 
     @Override
@@ -42,20 +73,20 @@ public class TetrisComponent extends JComponent implements BoardListener{
         Poly fallingPoly = board.getFalling();
 
 
-        for (int col = 0; col < boardWidth; col++) {
-       	    for (int row = 0; row < boardHeight; row++) {
-                polyInPos = col >= polyX && col < polyX + polyWidth && row >= polyY && row < polyY + polyHeight;
-                paintedSquare = board.getSquareType(col,row);
+        for (int row = 0; row < boardHeight; row++) {
+       	    for (int col = 0; col < boardWidth; col++) {
+                polyInPos = row >= polyY && col < polyX + polyWidth && col >= polyX && row < polyY + polyHeight;
+                paintedSquare = board.getSquareType(row,col);
                 if (polyInPos){
-                    polyPosEmpty = fallingPoly.getSquareType(col - polyX, row - polyY) == SquareType.EMPTY;
+                    polyPosEmpty = fallingPoly.getSquareType(row - polyY, col - polyX) == SquareType.EMPTY;
                     if (!polyPosEmpty){
-                        paintedSquare = fallingPoly.getSquareType(col - polyX, row - polyY);
+                        paintedSquare = fallingPoly.getSquareType(row - polyY, col - polyX);
                     }
                 }
                 g2d.setColor((Color) colorMap.get(paintedSquare));
-        	    g2d.fillRect(col * blockSize, row * blockSize, blockSize, blockSize);
+        	    g2d.fillRect(col * blockSize,row * blockSize, blockSize, blockSize);
                 g2d.setColor(Color.LIGHT_GRAY);
-                g2d.drawRect(col * blockSize, row * blockSize, blockSize, blockSize);
+                g2d.drawRect(col * blockSize,row * blockSize, blockSize, blockSize);
             }
         }
     }

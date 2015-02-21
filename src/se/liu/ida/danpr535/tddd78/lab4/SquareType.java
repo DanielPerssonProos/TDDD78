@@ -6,5 +6,5 @@ import java.util.EnumMap;
  * Created by Daniel on 15-02-11.
  */
 public enum SquareType {
-    I, O, T, S, Z, J, L, EMPTY, OUTSIDE
+    I, J, L, O, S, T, Z, EMPTY, OUTSIDE
 }

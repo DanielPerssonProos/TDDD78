@@ -46,7 +46,7 @@ public final class TetrominoMaker {
         SquareType[][] blueprint = new SquareType[4][4];
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 4; col++) {
-                if (row == 1){
+                if (col == 1){
                     blueprint[row][col] = SquareType.I;
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
@@ -59,7 +59,7 @@ public final class TetrominoMaker {
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                if (row == 1 || (row == 0 && col == 0)){
+                if (col == 1 || (col == 0 && row == 0)){
                     blueprint[row][col] = SquareType.J;
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
@@ -71,7 +71,7 @@ public final class TetrominoMaker {
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                if (row == 1 || (row == 0 && col == 2)){
+                if (col == 1 || (col == 0 && row == 2)){
                     blueprint[row][col] = SquareType.L;
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
@@ -96,7 +96,7 @@ public final class TetrominoMaker {
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                if ((row == 0 && col > 0) || (row == 1 && col < 2)){
+                if ((col == 0 && row > 0) || (col == 1 && row < 2)){
                     blueprint[row][col] = SquareType.S;
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
@@ -109,7 +109,7 @@ public final class TetrominoMaker {
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                if (row == 1 || (row == 0 && col == 1)){
+                if (col == 1 || (col == 0 && row == 1)){
                     blueprint[row][col] = SquareType.T;
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
@@ -122,7 +122,7 @@ public final class TetrominoMaker {
         SquareType[][] blueprint = new SquareType[3][3];
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
-                if ((row == 0 && col < 2) || (row == 1 && col > 0)){
+                if ((col == 0 && row < 2) || (col == 1 && row > 0)){
                     blueprint[row][col] = SquareType.Z;
                 } else blueprint[row][col] = SquareType.EMPTY;
             }
