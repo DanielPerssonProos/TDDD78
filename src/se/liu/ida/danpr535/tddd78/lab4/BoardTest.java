@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 /**
- * Created by Daniel on 15-02-11.
+ * This class is used to run the game. It uses a Timer to do a step on the board at every 750 milliseconds.
  */
 public final class BoardTest {
     private BoardTest(){}
@@ -23,7 +23,8 @@ public final class BoardTest {
 
         }
 	};
-	Timer clockTimer = new Timer(750, doOneStep);
+    int delayInMilliSeconds = 750;
+	Timer clockTimer = new Timer(delayInMilliSeconds, doOneStep);
  	clockTimer.setCoalesce(true);
 	clockTimer.start();
 
