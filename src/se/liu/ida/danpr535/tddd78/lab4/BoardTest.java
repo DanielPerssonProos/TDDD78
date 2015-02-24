@@ -25,6 +25,7 @@ public final class BoardTest {
 	};
     int delayInMilliSeconds = 750;
 	Timer clockTimer = new Timer(delayInMilliSeconds, doOneStep);
+        
  	clockTimer.setCoalesce(true);
 	clockTimer.start();
 
