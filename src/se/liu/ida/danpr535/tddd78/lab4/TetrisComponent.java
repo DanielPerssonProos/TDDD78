@@ -3,13 +3,18 @@ package se.liu.ida.danpr535.tddd78.lab4;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.AbstractMap;
 import java.util.EnumMap;
+
+/**
+ * This class is used to paint the board in the game frame, and also to handle input from the user.
+ */
 
 public class TetrisComponent extends JComponent implements BoardListener{
     private Board board;
     private int boardWidth;
     private int boardHeight;
-    private EnumMap colorMap;
+    private AbstractMap<SquareType, Color> colorMap;
     private final int blockSize;
 
     public TetrisComponent(Board board) {
@@ -17,7 +22,7 @@ public class TetrisComponent extends JComponent implements BoardListener{
         this.boardWidth = board.getWidth();
         this.boardHeight = board.getHeight();
         this.blockSize = 40;
-        this.colorMap = new EnumMap<SquareType,java.awt.Color>(SquareType.class);
+        this.colorMap = new EnumMap<>(SquareType.class);
         colorMap.put(SquareType.I, Color.RED);
         colorMap.put(SquareType.J, Color.YELLOW);
         colorMap.put(SquareType.L, Color.MAGENTA);
@@ -67,23 +72,20 @@ public class TetrisComponent extends JComponent implements BoardListener{
         int polyY = board.getFallingPosY();
         int polyWidth = board.getFalling().getSize();
         int polyHeight = board.getFalling().getSize();
-        boolean polyInPos;
-        boolean polyPosEmpty;
-        SquareType paintedSquare;
         Poly fallingPoly = board.getFalling();
 
 
         for (int row = 0; row < boardHeight; row++) {
        	    for (int col = 0; col < boardWidth; col++) {
-                polyInPos = row >= polyY && col < polyX + polyWidth && col >= polyX && row < polyY + polyHeight;
-                paintedSquare = board.getSquareType(row,col);
+                boolean polyInPos = row >= polyY && col < polyX + polyWidth && col >= polyX && row < polyY + polyHeight;
+                SquareType paintedSquare = board.getSquareType(row, col);
                 if (polyInPos){
-                    polyPosEmpty = fallingPoly.getSquareType(row - polyY, col - polyX) == SquareType.EMPTY;
+                    boolean polyPosEmpty = fallingPoly.getSquareType(row - polyY, col - polyX) == SquareType.EMPTY;
                     if (!polyPosEmpty){
                         paintedSquare = fallingPoly.getSquareType(row - polyY, col - polyX);
                     }
                 }
-                g2d.setColor((Color) colorMap.get(paintedSquare));
+                g2d.setColor(colorMap.get(paintedSquare));
         	    g2d.fillRect(col * blockSize,row * blockSize, blockSize, blockSize);
                 g2d.setColor(Color.LIGHT_GRAY);
                 g2d.drawRect(col * blockSize,row * blockSize, blockSize, blockSize);
@@ -91,6 +93,7 @@ public class TetrisComponent extends JComponent implements BoardListener{
         }
     }
 
+    @Override
     public Dimension getPreferredSize(){
         return new Dimension(boardWidth*blockSize,boardHeight*blockSize);
     }

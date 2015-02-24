@@ -1,10 +1,12 @@
 package se.liu.ida.danpr535.tddd78.lab4;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
- * Created by Daniel on 15-02-11.
+ * This class keeps track of the board and everything directly related to it. It keeps track of the falling poly
+ * and its position, the score, the listeners and so on. Most of the core game mechanics are also contained here.
  */
 public class Board {
     private SquareType[][] squares;
@@ -13,7 +15,7 @@ public class Board {
     private Poly falling;
     private int fallingPosX;
     private int fallingPosY;
-    private ArrayList<BoardListener> listeners;
+    private List<BoardListener> listeners;
     private int score;
 
     public Board(int height, int width) {
@@ -96,12 +98,14 @@ public class Board {
     }
 
     private void notifyListeners(){
+        //This way of writing this method in much more readable than using a ForEach.
         for (BoardListener listener : listeners) {
             listener.boardChanged();
         }
     }
 
     public void tick(){
+        //This method moves the game forward one "tick".
         if(collisionConfirmed("Down")){
             putBlockInBoard();
             setFalling(TetrominoMaker.getPoly(new Random().nextInt(TetrominoMaker.getNumberOfTypes())));
@@ -112,6 +116,7 @@ public class Board {
     }
 
     private boolean collisionConfirmed(String direction){
+        // This method checks if there is a block in the way in the direction given.
         boolean collision = false;
         int colAdjustment;
         int rowAdjustment;
@@ -140,6 +145,8 @@ public class Board {
                     if (blockNotEmpty) {
                         boolean blockInTheWay = getSquareType(fallingPosY + row + rowAdjustment,
                                 fallingPosX + col + colAdjustment) != SquareType.EMPTY;
+                        //blockNotEmpty is not always true. That completely depends on which index in the polys squares
+                        //field that is called upon.
                         if (blockNotEmpty && blockInTheWay)
                             collision = true;
                     }
@@ -162,6 +169,7 @@ public class Board {
     }
 
     public boolean checkGameOver(){
+        //This method checks if the new poly can be painted on the board. If not, the game is over.
         boolean gameOver = false;
         for (int row = 0; row < falling.getSize(); row++) {
             for (int col = 0; col < falling.getSize(); col++) {
@@ -191,7 +199,12 @@ public class Board {
     }
 
     private void removeFullRows(){
-        ArrayList<Integer> rowsToBeRemoved = new ArrayList<>();
+        /*Checks if there are any full rows and puts the row indicies of the full rows in the rowsToBeRemoved variable.
+        The elements in this variable are then sent to the removeRow function, one by one.
+        The reason that I did not change the type of the rowsToBeRemoved variable is that the type List is more describing
+        of what its purpose is.
+         */
+        List<Integer> rowsToBeRemoved = new ArrayList<>();
         boolean rowFullSoFar = true;
         for (int row = 0; row < height - 1; row++) {
             for (int col = 1; col < width - 1; col++) {
@@ -205,6 +218,7 @@ public class Board {
             } else
                 rowFullSoFar = true;
         }
+        //More readable than ForEach
         for (Integer row : rowsToBeRemoved) {
             removeRow(row);
         }
@@ -213,6 +227,7 @@ public class Board {
     }
 
     private void removeRow(int removedRow){
+        //For all rows above the one to be removed, the row is copied down to the row below. Deleting the row in the process.
         for (int row = removedRow - 1; row >= 0 ; row--) {
             for (int col = 1; col < width - 1; col++) {
                 setSquareType(row + 1, col, getSquareType(row, col));
@@ -239,6 +254,8 @@ public class Board {
     }
 
     private void updateScore(int removedRows){
+        //Updates the score based on the number of row removed during that tick.
+        // The magic ints in this function are the standard Tetris scores for that amount of rows.
         switch (removedRows){
             case 1:
                 score += 100;
@@ -258,6 +275,7 @@ public class Board {
     }
 
     public void resetBoard(){
+        //Resets the board when the player chooses to play again.
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 if (col == 0 || row == height - 1 || col == width - 1){

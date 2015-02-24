@@ -8,7 +8,9 @@ import java.awt.event.*;
 /**
  * Created by Daniel on 15-02-11.
  */
-public class BoardTest {
+public final class BoardTest {
+    private BoardTest(){}
+
     public static void main(String[] args) {
 	TetrisFrame tetroBlox = new TetrisFrame(new Board(16,12));
 

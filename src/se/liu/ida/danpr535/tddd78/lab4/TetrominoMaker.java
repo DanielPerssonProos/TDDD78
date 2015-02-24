@@ -5,6 +5,9 @@ package se.liu.ida.danpr535.tddd78.lab4;
  */
 public final class TetrominoMaker {
 
+    private TetrominoMaker() {
+    }
+
     public static int getNumberOfTypes() {
         return 7;
     }
@@ -15,8 +18,7 @@ public final class TetrominoMaker {
      SquareTypes at the very last when I declared them, they will not be
      able to be chosen. This because only a number between 0-6 will be
      generated and used as index.
-     * @param n
-     * @return
+     * @return how many poly types that exists.
      */
     public static Poly getPoly(int n) {
         /*
@@ -38,6 +40,8 @@ public final class TetrominoMaker {
             case Z:
                 return getZ();
             default:
+                //This method is never called on with a value n that extends to the OUTSIDE or EMPTY SquareType.
+                //Therefore this case should never be reached.
                 throw new RuntimeException("Invalid index");
         }
     }

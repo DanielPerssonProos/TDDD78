@@ -1,7 +1,8 @@
 package se.liu.ida.danpr535.tddd78.lab4;
 
 /**
- * Created by Daniel on 15-02-11.
+ * This class describes the poly-type used for the falling poly. It has an appearance described in the field squares,
+ * a size, which is the length of the block appearance.
  */
 public class Poly {
     private SquareType[][] squares;

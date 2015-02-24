@@ -3,7 +3,12 @@ package se.liu.ida.danpr535.tddd78.lab4;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * This is the main class of the game. It keeps track of the board and the TetrisComponent. It also handles all the
+ * other parts of the user interface. This includes the dialogs and menus contained in the game.
+ */
 
 public class TetrisFrame extends JFrame implements BoardListener{
     private Board gameBoard;
@@ -28,7 +33,7 @@ public class TetrisFrame extends JFrame implements BoardListener{
 	return gameBoard;
     }
 
-    public boolean showGameOverMessage(){
+    public void showGameOverMessage(){
         String name = JOptionPane.showInputDialog(this,"Poäng: " + gameBoard.getScore()+ "\n" + "Skriv in ditt namn",
                 "Game Over", JOptionPane.PLAIN_MESSAGE);
         if (name != null)
@@ -43,25 +48,27 @@ public class TetrisFrame extends JFrame implements BoardListener{
         } else if (reply == JOptionPane.YES_OPTION){
             gameBoard.resetBoard();
         }
-        return false;
     }
 
+    // This method creates a string containing all of the current highscores, formatted to fit the dialog its shown in.
     private String highscoreString(){
-        ArrayList<Highscore> highscores = (ArrayList<Highscore>) HighscoreList.getInstance().getHighscores();
-        String highscoreString = "";
+        List<Highscore> highscores = HighscoreList.getInstance().getHighscores();
+        StringBuilder highscoreString = new StringBuilder();
         int place = 1;
+        //This way of using append for the StringBuilder is used since every use of the append method adds a complete
+        //score.
         if (highscores.size() <= 10) {
             for (Highscore highscore : highscores) {
-                highscoreString += place + ". " + highscore.getName() + ": " + "\n" + highscore.getScore() + " poäng" + "\n";
+                highscoreString.append(place + ". " + highscore.getName() + ": " + "\n" + highscore.getScore() + " poäng" + "\n");
                 place += 1;
             }
         } else{
             for (int i = 1; i <= 10; i++) {
-                highscoreString += place + ". " + highscores.get(i).getName() + ": " +
-                        "\n" + highscores.get(i).getScore() + " poäng" + "\n";
+                highscoreString.append(place + ". " + highscores.get(i).getName() + ": " +
+                        "\n" + highscores.get(i).getScore() + " poäng" + "\n");
             }
         }
-        return highscoreString;
+        return highscoreString.toString();
     }
 
     @Override
